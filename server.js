@@ -15,6 +15,8 @@ app.use(morgan("tiny"));
 app.use("/api", apiRoutes);
 app.use("/", htmlRoutes);
 
+app.use(express.static(__dirname + "/public"));
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
 });
