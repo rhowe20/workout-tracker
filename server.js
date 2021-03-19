@@ -17,9 +17,15 @@ app.use("/", htmlRoutes);
 
 app.use(express.static(__dirname + "/public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/workout",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
 
 mongoose.connection.on("error", (err) =>
   console.log(`error in mongoose conneciton: ${err.message}`)
