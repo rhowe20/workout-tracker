@@ -25,7 +25,7 @@ router.get('/api/workouts/range', async (req, res) => {
             $addFields: {
                 totalDuration: { $sum: '$exercises.duration' },
             }
-        }]).limit(7);
+        }]).limit(5);
         res.json(workoutRange);
     } catch (err) {
         res.status(400);
