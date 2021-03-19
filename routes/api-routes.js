@@ -19,23 +19,17 @@ router.put("/workouts/:id", (req, res) => {
     })
 });
 
-router.get("/workouts/range", async (req, res) =>{
-try{
-const agg = await Workout.aggregate([
-    {
-      $addFields: {
-        totalDuration: {
-            $sum: "$exercises.duration"
-        },
-      },
-    },
-  ]).sort({_id: -1})
-  console.log(agg);
-  res.json(agg);
+router.get('/api/workouts/range', async (req, res) => {
+    try {
+        const workoutRange = await Workout.aggregate([{
+            $addFields: {
+                totalDuration: { $sum: '$exercises.duration' },
+            }
+        }]).limit(7);
+        res.json(workoutRange);
     } catch (err) {
-  console.log(err);
-  res.send(err.message);
-}
+        res.status(400);
+        res.send(`Failed with: ${err}`);
+    }
 })
-
 module.exports = router;
